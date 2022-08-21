@@ -1003,6 +1003,10 @@ input:-webkit-autofill:active {
     background: url(../../img/134.gif);
   }
 
+  .nav {
+    height: 75px;
+  }
+
   ul.mainNav {
     padding-top: 0.8%;
     margin: 0;
