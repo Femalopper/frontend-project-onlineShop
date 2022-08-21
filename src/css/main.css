@@ -643,10 +643,11 @@ address a {
 }
 
 .send_registration {
-  height: 40px;
+  height: 42px;
   margin-top: 3%;
   padding: 2%;
   border: 2px solid rgba(255, 230, 249, 0.8);
+  border-radius: 10px;
   background-color: rgba(255, 230, 249, 0.8);
 }
 
@@ -719,7 +720,7 @@ input:-webkit-autofill:active {
   padding: 0.5% 1.5%;
   margin-right: 1.5%;
   border: 1px solid rgb(213, 212, 212);
-  border-radius: 10%;
+  border-radius: 7px;
 }
 .closeButton:hover,
 .send_registration:enabled:hover {
