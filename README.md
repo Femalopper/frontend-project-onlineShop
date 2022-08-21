@@ -12,12 +12,12 @@ Demonstration of adaptive and responsive online shop with the usage of additiona
 
 ## Main functionality animation
 
-![Alt text](https://github.com/Femalopper/frontend-project-online-shop/blob/main/screenshots/online-shop.gif)
+![Alt text](https://github.com/Femalopper/frontend-project-onlineShop/blob/main/screenshots/online-shop.gif)
 
 ## Adaptive version for Ipad
 
-![Alt text](https://github.com/Femalopper/frontend-project-online-shop/blob/main/screenshots/online-shop-for-ipad.gif)
+![Alt text](https://github.com/Femalopper/frontend-project-onlineShop/blob/main/screenshots/online-shop-for-ipad.gif)
 
 ## Adaptive version for mobile phone
 
-![Alt text](https://github.com/Femalopper/frontend-project-online-shop/blob/main/screenshots/online-shop-for-mobile.gif)
+![Alt text](https://github.com/Femalopper/frontend-project-onlineShop/blob/main/screenshots/online-shop-for-mobile.gif)
