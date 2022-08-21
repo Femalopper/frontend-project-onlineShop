@@ -699,7 +699,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   box-shadow: white;
-  -webkit-box-shadow: 0 0 0 30px rgb(250, 236, 255) inset !important;
+  -webkit-box-shadow: 0 0 0 30px rgb(255, 236, 250) inset !important;
 }
 
 .filled {
