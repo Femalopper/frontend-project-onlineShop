@@ -606,7 +606,7 @@ address a {
 .blind_Layer {
   background-image: url(../../img/background.gif);
   background-color: rgb(251, 251, 251);
-  opacity: 0.99;
+  opacity: 0.98;
   bottom: 0;
   left: 0;
   position: fixed;
@@ -1004,7 +1004,7 @@ input:-webkit-autofill:active {
   }
 
   .nav {
-    height: 70px;
+    height: 75px;
   }
 
   ul.mainNav {
