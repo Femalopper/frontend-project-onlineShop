@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shellac butik</title>
+    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/sweetalert2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../js/transition.js" type="text/javascript"></script>
+    <script>
+      const showRegistrationForm = (win, blind) => {
+        $("#" + win).show();
+        if (blind) $("#blind_Layer").show();
+        $("body").addClass("blind_LayerWidth");
+        const scrollY =
+          document.documentElement.style.getPropertyValue("--scroll-y");
+        const body = document.body;
+        body.style.position = "fixed";
+        body.style.top = `-${scrollY}`;
+      };
+
+      const closeRegistrationForm = (win, blind) => {
+        const scrollY = document.body.style.top;
+        document.body.style.position = "";
+        document.body.style.top = "";
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+        $("#" + win).hide();
+        if (blind) $("#blind_Layer").hide();
+        $("body").removeClass("blind_LayerWidth");
+      };
+
+      window.addEventListener("scroll", () => {
+        document.documentElement.style.setProperty(
+          "--scroll-y",
+          `${window.scrollY}px`
+        );
+      });
+
+      const validateEmail = (email) => {
+        let re = /^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i;
+        return re.test(String(email).toLowerCase());
+      };
+      const phoneNumber = (number) => {
+        let re =
+          /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+        return re.test(number);
+      };
+      const checkParams = () => {
+        let namereg = $("#name").val();
+        if (namereg.length >= 2) {
+          $("#name").addClass("filled");
+        } else {
+          $("#name").removeClass("filled");
+        }
+        let mailaddr = $("#mailto").val();
+        if (mailaddr.length >= 7 && validateEmail(mailaddr)) {
+          $("#mailto").addClass("filled");
+        } else {
+          $("#mailto").removeClass("filled");
+        }
+        let pass = $("#password").val();
+        if (pass.length >= 7) {
+          $("#password").addClass("filled");
+        } else {
+          $("#password").removeClass("filled");
+        }
+        let tel = $("#telephone").val();
+        if (tel.length >= 11 && phoneNumber(tel)) {
+          $("#telephone").addClass("filled");
+        } else {
+          $("#telephone").removeClass("filled");
+        }
+        if (
+          namereg.length >= 2 &&
+          pass.length >= 7 &&
+          mailaddr.length >= 7 &&
+          validateEmail(mailaddr) &&
+          tel.length >= 11 &&
+          phoneNumber(tel)
+        ) {
+          $("#send_reg").removeAttr("disabled");
+        } else $("#send_reg").attr("disabled", "disabled");
+      };
+
+      const sendRegistform = () => {
+        Swal.fire({
+          title:
+            "Вы зарегистрированы.\nДля того, чтобы подтвердить регистрацию, перейдите по ссылке на почте",
+          confirmButtonColor: "rgba(170,20,115,0.8)",
+        });
+        $(".blind_Layer").hide();
+        $("#send_reg").attr("disabled", "disabled");
+      };
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <!---Форма регистрации-------------------------------->
+      <form class="form">
+        <fieldset>
+          <legend>Войти или зарегистрироваться</legend>
+          <span class="name">Имя:</span>
+          <input class="enter" type="text" name="username" autocomplete="off" />
+          <span class="passw">Пароль:</span>
+          <input class="enter" type="password" name="psw" />
+          <div class="submission">
+            <input class="entry_1" type="submit" value="Войти" />
+            <input
+              class="entry_2"
+              type="button"
+              value="Зарегистрироваться"
+              href="#"
+              onclick="showRegistrationForm('registration', 1)"
+            />
+          </div>
+        </fieldset>
+      </form>
+      <!---Форма регистрации(кнопка зарегистрироваться)---------------------->
+      <div id="blind_Layer" class="blind_Layer">
+        <div id="registration" class="popup">
+          <button
+            href="#"
+            onclick="closeRegistrationForm('registration', 1)"
+            style="float: right"
+            class="closeButton"
+          >
+            ✕
+          </button>
+          <h2>Введите ваши контактные данные</h2>
+
+          <form id="formToSend">
+            <input
+              id="name"
+              type="text"
+              onkeyup="checkParams()"
+              placeholder="Имя"
+            />
+            <input
+              id="mailto"
+              type="text"
+              onkeyup="checkParams()"
+              placeholder="Электронная почта"
+              class="text-input"
+            />
+            <input
+              id="password"
+              type="password"
+              onkeyup="checkParams()"
+              placeholder="Пароль"
+              class="text-input"
+            />
+            <input
+              id="telephone"
+              type="text"
+              onkeyup="checkParams()"
+              placeholder="Телефон"
+            />
+          </form>
+          <button
+            type="submit"
+            id="send_reg"
+            class="send_registration"
+            onclick="sendRegistform()"
+            href="#"
+            disabled
+          >
+            Зарегистрироваться
+          </button>
+        </div>
+      </div>
+      <!---Логотип сайта----------------------------------------------->
+      <div class="logo"><img src="../../img/logo.png" /></div>
+    </header>
+    <!---Меню-------------------------------------------------->
+    <nav class="nav">
+      <ul class="mainNav">
+        <li>
+          <button
+            class="nav_a active"
+            href="#"
+            onclick="document.getElementById('page1').style.display='block'; 
+	          document.getElementById('page2').style.display='none'; 
+	          document.getElementById('page3').style.display='none'; 
+	          document.getElementById('page4').style.display='none'; 
+	          document.getElementById('page5').style.display='none';
+	          document.getElementById('firstelem').style.display='none';
+	          document.getElementById('secondelem').style.display='none';
+	          document.getElementById('thirdelem').style.display='none';
+	          document.getElementById('fourthelem').style.display='none';
+	          document.getElementById('fifthelem').style.display='none';
+	          document.getElementById('sixthelem').style.display='none';
+	          document.getElementById('seventhelem').style.display='none';
+	          document.getElementById('eightelem').style.display='none';
+	          document.getElementById('ninethelem').style.display='none';
+	          document.getElementById('tenthelem').style.display='none';
+	          document.getElementById('eleventhelem').style.display='none';
+	          document.getElementById('twelvthelem').style.display='none';"
+          >
+            Главная
+          </button>
+        </li>
+        <li>
+          <button
+            class="nav_a"
+            href="#"
+            onclick="document.getElementById('page2').style.display='block'; 
+	          document.getElementById('page1').style.display='none'; 
+	          document.getElementById('page3').style.display='none'; 
+	          document.getElementById('page4').style.display='none'; 
+	          document.getElementById('page5').style.display='none';
+	          document.getElementById('firstelem').style.display='none';
+	          document.getElementById('secondelem').style.display='none';
+	          document.getElementById('thirdelem').style.display='none';
+	          document.getElementById('fourthelem').style.display='none';
+	          document.getElementById('fifthelem').style.display='none';
+	          document.getElementById('sixthelem').style.display='none';
+	          document.getElementById('seventhelem').style.display='none';
+	          document.getElementById('eightelem').style.display='none';
+	          document.getElementById('ninethelem').style.display='none';
+	          document.getElementById('tenthelem').style.display='none';
+	          document.getElementById('eleventhelem').style.display='none';
+	          document.getElementById('twelvthelem').style.display='none';"
+          >
+            Каталог товаров
+          </button>
+        </li>
+        <li>
+          <button
+            class="nav_a"
+            href="#"
+            onclick="document.getElementById('page3').style.display='block'; 
+	          document.getElementById('page1').style.display='none'; 
+	          document.getElementById('page2').style.display='none'; 
+	          document.getElementById('page4').style.display='none'; 
+	          document.getElementById('page5').style.display='none';
+	          document.getElementById('firstelem').style.display='none';
+	          document.getElementById('secondelem').style.display='none';
+	          document.getElementById('thirdelem').style.display='none';
+	          document.getElementById('fourthelem').style.display='none';
+	          document.getElementById('fifthelem').style.display='none';
+	          document.getElementById('sixthelem').style.display='none';
+	          document.getElementById('seventhelem').style.display='none';
+	          document.getElementById('eightelem').style.display='none';
+	          document.getElementById('ninethelem').style.display='none';
+	          document.getElementById('tenthelem').style.display='none';
+	          document.getElementById('eleventhelem').style.display='none';
+	          document.getElementById('twelvthelem').style.display='none';"
+          >
+            Доставка и оплата
+          </button>
+        </li>
+        <li>
+          <button
+            class="nav_a"
+            href="#"
+            onclick="document.getElementById('page4').style.display='block'; 
+	          document.getElementById('page1').style.display='none'; 
+	          document.getElementById('page2').style.display='none'; 
+	          document.getElementById('page3').style.display='none'; 
+	          document.getElementById('page5').style.display='none';
+	          document.getElementById('firstelem').style.display='none';
+	          document.getElementById('secondelem').style.display='none';
+	          document.getElementById('thirdelem').style.display='none';
+	          document.getElementById('fourthelem').style.display='none';
+	          document.getElementById('fifthelem').style.display='none';
+	          document.getElementById('sixthelem').style.display='none';
+	          document.getElementById('seventhelem').style.display='none';
+	          document.getElementById('eightelem').style.display='none';
+	          document.getElementById('ninethelem').style.display='none';
+	          document.getElementById('tenthelem').style.display='none';
+	          document.getElementById('eleventhelem').style.display='none';
+	          document.getElementById('twelvthelem').style.display='none';"
+          >
+            О компании
+          </button>
+        </li>
+        <li>
+          <button
+            class="nav_a"
+            href="#"
+            onclick="document.getElementById('page5').style.display='block'; 
+	          document.getElementById('page1').style.display='none'; 
+	          document.getElementById('page2').style.display='none'; 
+	          document.getElementById('page3').style.display='none'; 
+	          document.getElementById('page4').style.display='none';
+	          document.getElementById('firstelem').style.display='none';
+	          document.getElementById('secondelem').style.display='none';
+	          document.getElementById('thirdelem').style.display='none';
+	          document.getElementById('fourthelem').style.display='none';
+	          document.getElementById('fifthelem').style.display='none';
+	          document.getElementById('sixthelem').style.display='none';
+	          document.getElementById('seventhelem').style.display='none';
+	          document.getElementById('eightelem').style.display='none';
+	          document.getElementById('ninethelem').style.display='none';
+	          document.getElementById('tenthelem').style.display='none';
+	          document.getElementById('eleventhelem').style.display='none';
+	          document.getElementById('twelvthelem').style.display='none';"
+          >
+            Контакты
+          </button>
+        </li>
+        <li class="basket"></li>
+      </ul>
+    </nav>
+    <!---Основной блок-------------------------------->
+    <main id="wrapper">
+      <!---Главная-------------------------------->
+      <section id="page1">
+        <h1>Хиты продаж</h1>
+        <article class="table">
+          <article class="row">
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('firstelem').style.display='block';
+		            document.getElementById('page1').style.display='none';"
+              >
+                <img src="../../img/1.jpg" alt="element_1"
+              /></a>
+              <figcaption>База + Топ комплект</figcaption>
+              <div class="price">
+                <p class="price0">400 руб.</p>
+                <p class="price1">250 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="001"
+                data-sb-product-name="База + Топ"
+                data-sb-product-price="250"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/1.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('sixthelem').style.display='block';
+			          document.getElementById('page1').style.display='none';"
+                ><img src="../../img/6.jpg" alt="element_6"
+              /></a>
+              <figcaption>Начальный Bluesky</figcaption>
+              <div class="price">
+                <p class="price0">2300 руб.</p>
+                <p class="price1">1700 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="006"
+                data-sb-product-name="Комплект для Shellac Начальный Bluesky"
+                data-sb-product-price="1700"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/6.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('eleventhelem').style.display='block';
+			          document.getElementById('page1').style.display='none';"
+                ><img src="../../img/11.jpg" alt="element_11"
+              /></a>
+              <figcaption>Bluesky Гибридный</figcaption>
+              <div class="price">
+                <p class="price0">3900 руб.</p>
+                <p class="price1">3600 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="011"
+                data-sb-product-name="Комплект для Shellac Bluesky Гибридный"
+                data-sb-product-price="3600"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/11.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('twelvthelem').style.display='block';
+		         	  document.getElementById('page1').style.display='none';"
+                ><img src="../../img/12.jpg" alt="element_12"
+              /></a>
+              <figcaption>Продвинутый Bluesky</figcaption>
+              <div class="price">
+                <p class="price0">4200 руб.</p>
+                <p class="price1">3900 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="012"
+                data-sb-product-name="Комплект для Shellac Продвинутый Bluesky"
+                data-sb-product-price="3900"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/12.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+          </article>
+        </article>
+        <section class="main__description">
+          <h2>
+            <i
+              >Shellac-butik – все для профессионального маникюра и дизайна
+              ногтей</i
+            >
+          </h2>
+          <br />
+          <br />
+          В интернет-магазине Shellac-Butik для покупателя доступна вся
+          необходимая косметика по уходу за ресницами, бровями и ногтями. В
+          ассортименте представлена продукция для макияжа, наращивания ногтей,
+          маникюра, ухода за кожей тела и волосами, а также проведения других
+          косметических процедур.
+          <br />
+          <br />
+          Начав работу в 2014 году, мы успели добиться больших успехов,
+          заслужили внимание и лояльность со стороны многих покупателей и
+          построили на этом хорошую репутацию. У нас собрана вся косметика и
+          инструменты для того, чтобы женщина могла самостоятельно привести себя
+          в порядок, выглядеть стильно и привлекательно. Мы готовы предложить в
+          полном объеме продукцию для поддержания функциональности большого
+          салона красоты.
+          <br />
+          <br />
+          <br />
+          <h3>Широкий выбор продукции</h3>
+          <br />
+          <br />
+          Ассортимент продукции наполнен натуральной косметикой и надежными
+          инструментами, тщательно подобранными в соответствии с новыми
+          направлениями и технологиями в области маникюра и дизайна ногтей,
+          макияжа и ухода за волосами. На полках магазина можно выбрать:
+          <ul class="main_info">
+            <li>гель-лаки;</li>
+            <li>средства для наращивания и дизайна ногтей;</li>
+            <li>наборы для Shellac;</li>
+            <li>специальные жидкости по уходу за ногтями и кожей рук;</li>
+            <li>терки, кисти, бафы и пилы;</li>
+            <li>сумки и чемоданы;</li>
+            <li>одноразовые материалы;</li>
+          </ul>
+          <br />
+          <br />
+          <h3>Почему отдать предпочтение стоит именно нам</h3>
+          <br />
+          <br />
+          Мы реализуем качественный товар, который иногда можно увидеть в других
+          интернет-магазинах. Однако благодаря нашей плодотворной работе мы
+          может предложить покупателю лучшие условия для покупки:
+          <ul class="main_info">
+            <li>огромный ассортимент товаров от самых популярных брендов;</li>
+            <li>доступные цены на все позиции товаров;</li>
+            <li>высокое качество продукции;</li>
+            <li>оперативная доставка товара.</li>
+          </ul>
+          <br />
+          <br />
+          Профессиональная команда консультантов готова в любое время ответить
+          на все вопросы покупателей и оказать грамотную помощью в выборе
+          продукции. Мы обеспечиваем лучшие условия для оформления заказа, как
+          для розничных клиентов, так и для профессиональных салонов.
+        </section>
+      </section>
+      <!---Каталог товаров-------------------------------->
+      <section id="page2" style="display: none">
+        <h1>Готовые комплекты</h1>
+        <article id="table" class="table">
+          <article class="row">
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+		            document.getElementById('firstelem').style.display='block';"
+              >
+                <img src="../../img/1.jpg" alt="element_1"
+              /></a>
+              <figcaption>База + Топ комплект</figcaption>
+              <div class="price">
+                <p class="price0">400 руб.</p>
+                <p class="price1">250 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="001"
+                data-sb-product-name="База + Топ"
+                data-sb-product-price="250"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/1.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+			          document.getElementById('secondelem').style.display='block';"
+                ><img src="../../img/2.jpg" alt="element_2"
+              /></a>
+              <figcaption>База/Топ/Праймер</figcaption>
+              <div class="price">
+                <p class="price0">600 руб.</p>
+                <p class="price1">350 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="002"
+                data-sb-product-name="База/Топ/Праймер"
+                data-sb-product-price="350"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/2.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+			          document.getElementById('thirdelem').style.display='block';"
+                ><img src="../../img/3.jpg" alt="element_3"
+              /></a>
+              <figcaption>Экспресс маникюр</figcaption>
+              <div class="price">
+                <p class="price0">900 руб.</p>
+                <p class="price1">500 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="003"
+                data-sb-product-name="Комплект для Shellac Экспресс маникюр"
+                data-sb-product-price="500"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/3.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+				        document.getElementById('fourthelem').style.display='block';"
+                ><img src="../../img/4.png" alt="element_4"
+              /></a>
+              <figcaption>Базовый Bluesky</figcaption>
+              <div class="price">
+                <p class="price0">2500 руб.</p>
+                <p class="price1">1900 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="004"
+                data-sb-product-name="Комплект для Shellac Базовый Bluesky"
+                data-sb-product-price="1900"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/4.png"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+          </article>
+          <article class="row">
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+			          document.getElementById('fifthelem').style.display='block';"
+                ><img src="../../img/5.jpg" alt="element_5"
+              /></a>
+              <figcaption>Стартовый Bluesky</figcaption>
+              <div class="price">
+                <p class="price0">2000 руб.</p>
+                <p class="price1">1500 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="005"
+                data-sb-product-name="Комплект для Shellac Стартовый Bluesky"
+                data-sb-product-price="1500"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/5.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+			          document.getElementById('sixthelem').style.display='block';"
+                ><img src="../../img/6.jpg" alt="element_6"
+              /></a>
+              <figcaption>Начальный Bluesky</figcaption>
+              <div class="price">
+                <p class="price0">2300 руб.</p>
+                <p class="price1">1700 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="006"
+                data-sb-product-name="Комплект для Shellac Начальный Bluesky"
+                data-sb-product-price="1700"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/6.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+				        document.getElementById('seventhelem').style.display='block';"
+                ><img src="../../img/7.jpg" alt="element_7"
+              /></a>
+              <figcaption>Стандарт Стиль</figcaption>
+              <div class="price">
+                <p class="price0">3500 руб.</p>
+                <p class="price1">2900 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="007"
+                data-sb-product-name="Комплект для Shellac Стандарт Стиль"
+                data-sb-product-price="2900"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/7.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+				        document.getElementById('eightelem').style.display='block';"
+                ><img src="../../img/8.jpg" alt="element_8"
+              /></a>
+              <figcaption>Стандарт Плюс</figcaption>
+              <div class="price">
+                <p class="price0">2800 руб.</p>
+                <p class="price1">1600 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="008"
+                data-sb-product-name="Комплект для Shellac Стандарт Плюс"
+                data-sb-product-price="1600"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/8.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+          </article>
+          <article class="row">
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+			          document.getElementById('ninethelem').style.display='block';"
+                ><img src="../../img/9.png" alt="element_9"
+              /></a>
+              <figcaption>CosmoLac Стандарт</figcaption>
+              <div class="price">
+                <p class="price0">3200 руб.</p>
+                <p class="price1">3000 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="009"
+                data-sb-product-name="Комплект для Shellac CosmoLac Стандарт"
+                data-sb-product-price="3000"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/9.png"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+				        document.getElementById('tenthelem').style.display='block';"
+                ><img src="../../img/10.jpg" alt="element_10"
+              /></a>
+              <figcaption>Стандарт Улучшенный</figcaption>
+              <div class="price">
+                <p class="price0">3800 руб.</p>
+                <p class="price1">3500 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="010"
+                data-sb-product-name="Комплект для Shellac Стандарт Улучшенный"
+                data-sb-product-price="3500"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/10.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+				        document.getElementById('eleventhelem').style.display='block';"
+                ><img src="../../img/11.jpg" alt="element_11"
+              /></a>
+              <figcaption>Bluesky Гибридный</figcaption>
+              <div class="price">
+                <p class="price0">3900 руб.</p>
+                <p class="price1">3600 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="011"
+                data-sb-product-name="Комплект для Shellac Bluesky Гибридный"
+                data-sb-product-price="3600"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/11.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+            <article class="cell">
+              <a
+                href="#"
+                onclick="document.getElementById('page2').style.display='none'; 
+				        document.getElementById('twelvthelem').style.display='block';"
+                ><img src="../../img/12.jpg" alt="element_12"
+              /></a>
+              <figcaption>Продвинутый Bluesky</figcaption>
+              <div class="price">
+                <p class="price0">4200 руб.</p>
+                <p class="price1">3900 руб.</p>
+              </div>
+              <div class="product__quantity"></div>
+              <button
+                class="add-to-cart"
+                type="button"
+                data-sb-id-or-vendor-code="012"
+                data-sb-product-name="Комплект для Shellac Продвинутый Bluesky"
+                data-sb-product-price="3900"
+                data-sb-product-quantity="1"
+                data-sb-product-img="../../img/12.jpg"
+              >
+                <div class="add">Добавить в корзину</div>
+                <img src="../../img/shopping-basket-wight.svg" />
+              </button>
+            </article>
+          </article>
+        </article>
+      </section>
+      <!---Карточки товаров-------------------------------->
+      <!---Каталог товаров 1-ый элемент-------------------------------->
+      <article id="firstelem" style="display: none">
+        <h1>Комплект Bluesky &#171;База + Топ комплект&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/1.jpg" alt="element_1" />
+            <figcaption>База + Топ комплект</figcaption>
+            <div class="price">
+              <p class="price0">400 руб.</p>
+              <p class="price1">250 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="001"
+              data-sb-product-name="База + Топ"
+              data-sb-product-price="250"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/1.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Bluesky Каучуковая Base Coat 10 ml базовое покрытие
+            <br />
+            Bluesky Top Coat no wipe 10 ml Топ без липкого слоя
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            База Bluesky необходима как основа для создания маникюра шеллаком.
+            Наносите базу тонким слоем на натуральную ногтевую пластину,
+            предварительно обработав ногти дезинфектором. Требует полимеризации
+            в течение 1 минуты в УФ-лампе (10 секунд в светодиодной). Покрытие
+            Bluesky Base Coat обеспечит надежное сцепление натуральных ногтей с
+            цветным гель-лаком, защитит ногти от окрашивания пигментами,
+            обеспечит более удобное нанесение следующих слоев искусственного
+            покрытия.
+
+            <br />
+            <br />
+            Bluesky Top Coat без липкого слоя- это покрытие, которое наносится
+            для защиты маникюра от сколов, царапин и выгорания. Топ требует
+            полимеризации в УФ или ЛЕД-лампе, после которой не нужно снимать
+            липкий слой.
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 2-ой элемент-------------------------------->
+      <article id="secondelem" style="display: none">
+        <h1>Комплект Bluesky &#171;База/Топ/Праймер&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/2.jpg" alt="element_2" />
+            <figcaption>База/Топ/Праймер</figcaption>
+            <div class="price">
+              <p class="price0">600 руб.</p>
+              <p class="price1">350 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="002"
+              data-sb-product-name="База/Топ/Праймер"
+              data-sb-product-price="350"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/2.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Bluesky Rubber Base Coat 10 ml каучуковое базовое покрытие, (база)
+            <br />
+            Bluesky Rubber Top Coat 10 ml каучуковое топовое покрытие (топ)
+            <br />
+            Bluesky, Primer 10 ml (праймер)
+            <br />
+            <br />
+            База Bluesky необходима как основа для создания маникюра шеллаком.
+            Наносите базу тонким слоем на натуральную ногтевую пластину,
+            предварительно обработав ногти дезинфектором. Требует полимеризации
+            в течение 1 минуты в УФ-лампе (10 секунд в светодиодной). Покрытие
+            Bluesky Rubber Base Coat обеспечит надежное сцепление натуральных
+            ногтей с цветным гель-лаком, защитит ногти от окрашивания
+            пигментами, обеспечит более удобное нанесение следующих слоев
+            искусственного покрытия. Bluesky Top Coat - это покрытие, которое
+            наносится для защиты маникюра от сколов, царапин и выгорания.
+            <br />
+            <br />
+            Топ требует полимеризации в УФ или ЛЕД-лампе, после которой с
+            покрытия нужно снять липкий слой.
+            <br />
+            <br />
+            Праймер используется для увеличения степени сцепления искусственого
+            покрытия с ногтевой пластиной, подготавливает ногти для нанесения
+            гель-лака или другого материала. Праймер Bluesky не содержит такие
+            вредные вещества, как толуол, формальдегид и дебутилфталат. Он
+            неопасен для окружающей среды и абсолютно безопасен при
+            использовании по назначению. Праймер Bluesky - это средство хорошего
+            качества по доступной цене.
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 3-ий элемент-------------------------------->
+      <article id="thirdelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Экспресс маникюр&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/3.jpg" alt="element_3" />
+            <figcaption>Экспресс маникюр</figcaption>
+            <div class="price">
+              <p class="price0">900 руб.</p>
+              <p class="price1">500 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="003"
+              data-sb-product-name="Комплект для Shellac Экспресс маникюр"
+              data-sb-product-price="500"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/3.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Набор "Экспресс маникюр" состоит из 6 самых необходимых товаров для
+            создания маникюра в путешествии
+            <br />
+            Готовый набор позволит Вам сэкономить время и деньги на посещение
+            салонов красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>
+                Салфетки для снятия лака,гель-лака(20 шт) Salon professional
+              </li>
+              <li>Лак для ногтей POSH, не требующий сушки в лампе</li>
+              <li>Апельсиновые палочки (мини) 10 шт.</li>
+              <li>Пилки одноразовые (мини) 5 шт.</li>
+              <li>Баф шлифовальный плоский, 180/180</li>
+              <li>Масло-карандаш для кутикулы с ароматом на выбор.</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 4-ый элемент-------------------------------->
+      <article id="fourthelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Базовый Bluesky&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/4.png" alt="element_4" />
+            <figcaption>Базовый Bluesky</figcaption>
+            <div class="price">
+              <p class="price0">2500 руб.</p>
+              <p class="price1">1900 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="004"
+              data-sb-product-name="Комплект для Shellac Базовый Bluesky"
+              data-sb-product-price="1900"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/4.png"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Набор Базовый состоит из 11 самых необходимых товаров для создания
+            гель-лакового маникюра в домашних условиях.
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>UV лампа 36 Вт квадратная (цвет на выбор)</li>
+              <li>Bluesky Rubber base coat, Каучуковая основа для гель-лака</li>
+              <li>Bluesky Rubber top coat, Каучуковый топ для гель-лака</li>
+              <li>Гель-лак Bluesky</li>
+              <li>Увлажняющее масло-карандаш для кутикулы</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний</li>
+              <li>Безворсовые салфетки (70 шт)</li>
+              <li>Апельсиновые палочки 10 шт.</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 5-ый элемент-------------------------------->
+      <article id="fifthelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Стартовый Bluesky&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/5.jpg" alt="element_5" />
+            <figcaption>Стартовый Bluesky</figcaption>
+            <div class="price">
+              <p class="price0">2000 руб.</p>
+              <p class="price1">1500 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="005"
+              data-sb-product-name="Комплект для Shellac Стартовый Bluesky"
+              data-sb-product-price="1500"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/5.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Набор Стартовый Bluesky срстоит из самых первых необходимых товаров
+            для создания гель-лакового маникюра в домашних условиях.
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>UV лампа 36 Вт квадратная</li>
+              <li>Bluesky base coat ( основа для гель-лака)</li>
+              <li>Bluesky top coat (закрепиель для гель-лака)</li>
+              <li>Гель-лак Bluesky</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 6-ой элемент-------------------------------->
+      <article id="sixthelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Стартовый Bluesky&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/6.jpg" alt="element_6" />
+            <figcaption>Начальный Bluesky</figcaption>
+            <div class="price">
+              <p class="price0">2300 руб.</p>
+              <p class="price1">1700 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="006"
+              data-sb-product-name="Комплект для Shellac Начальный Bluesky"
+              data-sb-product-price="1700"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/6.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Набор Bluesky Базовый состоит из 8 самых необходимых товаров для
+            создания гель-лакового маникюра в домашних условиях.
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>UV лампа 36 Вт квадратная</li>
+              <li>Bluesky base coat ( основа для гель-лака)</li>
+              <li>Bluesky top coat (закрепиель для гель-лака)</li>
+              <li>Гель-лак Bluesky</li>
+              <li>Bluesky Primer</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 7-ой элемент-------------------------------->
+      <article id="seventhelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Стандарт Стиль&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/7.jpg" alt="element_7" />
+            <figcaption>Стандарт Стиль</figcaption>
+            <div class="price">
+              <p class="price0">3500 руб.</p>
+              <p class="price1">2900 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="007"
+              data-sb-product-name="Комплект для Shellac Стандарт Стиль"
+              data-sb-product-price="2900"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/7.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Набор "Стандарт Bluesky Стиль" состоит из 16 самых необходимых
+            товаров для создания гель-лакового маникюра в домашних условиях.
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>
+                Лампа SUN LED/UV 24Вт —мощная, легкая и компактная, имеет сенсор
+                движения
+              </li>
+              <li>Bluesky Rubber base coat, Каучуковая основа для гель-лака</li>
+              <li>Bluesky Rubber top coat, Каучуковый топ для гель-лака</li>
+              <li>Bluesky Primer</li>
+              <li>Гель-лак Bluesky 4 шт</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>
+                Антибактериальное средство для рук и ногтей 80мл, Severina
+              </li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний желтый</li>
+              <li>Безворсовые салфетки (70шт)</li>
+              <li>Апельсиновые палочки 25шт.</li>
+              <li>Щетка для удаления пыли (модель №2)</li>
+              <li>Фольга White Line, серебряная (без коробки) 25м.</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 8-ой элемент-------------------------------->
+      <article id="eightelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Стандарт Плюс&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/8.jpg" alt="element_8" />
+            <figcaption>Стандарт Плюс</figcaption>
+            <div class="price">
+              <p class="price0">2800 руб.</p>
+              <p class="price1">1600 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="008"
+              data-sb-product-name="Комплект для Shellac Стандарт Плюс"
+              data-sb-product-price="1600"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/8.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            Набор Стандарт Гибридный Bluesky состоит из 15 самых необходимых
+            товаров для создания гель-лакового маникюра в домашних условиях.
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>Лампа гибридная CCFL+Led 36 вт</li>
+              <li>Bluesky Rubber base coat, Каучуковая основа для гель-лака</li>
+              <li>Bluesky Rubber top coat, Каучуковый топ для гель-лака</li>
+              <li>Гель-лак Bluesky 3 шт</li>
+              <li>Увлажняющее масло-карандаш для кутикулы</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний желтый</li>
+              <li>Безворсовые салфетки (70шт)</li>
+              <li>Апельсиновые палочки 15 шт.</li>
+              <li>Зажимы-прищепки для снятия лака</li>
+              <li>Блестки для дизайна ногтей</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 9-ый элемент-------------------------------->
+      <article id="ninethelem" style="display: none">
+        <h1>Комплект Bluesky &#171;CosmoLac Стандарт&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/9.png" alt="element_9" />
+            <figcaption>CosmoLac Стандарт</figcaption>
+            <div class="price">
+              <p class="price0">3200 руб.</p>
+              <p class="price1">3000 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="009"
+              data-sb-product-name="Комплект для Shellac CosmoLac Стандарт"
+              data-sb-product-price="3000"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/9.png"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            <br />
+            Набор Стандарт Гибридный Bluesky состоит из 15 самых необходимых
+            товаров для создания гель-лакового маникюра в домашних условиях.
+            <br />
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>Лампа гибридная CCFL+Led 36 вт</li>
+              <li>Bluesky Rubber base coat, Каучуковая основа для гель-лака</li>
+              <li>Bluesky Rubber top coat, Каучуковый топ для гель-лака</li>
+              <li>Гель-лак Bluesky 3 шт</li>
+              <li>Увлажняющее масло-карандаш для кутикулы</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний желтый</li>
+              <li>Безворсовые салфетки (70шт)</li>
+              <li>Апельсиновые палочки 15 шт.</li>
+              <li>Зажимы-прищепки для снятия лака</li>
+              <li>Блестки для дизайна ногтей</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 10-ый элемент-------------------------------->
+      <article id="tenthelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Стандарт Улучшенный&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/10.jpg" alt="element_10" />
+            <figcaption>Стандарт Улучшенный</figcaption>
+            <div class="price">
+              <p class="price0">3800 руб.</p>
+              <p class="price1">3500 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="010"
+              data-sb-product-name="Комплект для Shellac Стандарт Улучшенный"
+              data-sb-product-price="3500"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/10.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            <br />
+            Набор Стандарт Bluesky Улучшенный состоит из 17 самых необходимых
+            товаров для создания гель-лакового маникюра в домашних условиях.
+            <br />
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>Лампа гибридная УФ/Led 36 вт</li>
+              <li>Bluesky Rubber base coat, Каучуковая основа для гель-лака</li>
+              <li>Bluesky Rubber top coat, Каучуковый топ для гель-лака</li>
+              <li>Гель-лак Bluesky 3 шт</li>
+              <li>Bluesky Primer</li>
+              <li>Гель-лак Bluesky 3 шт</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>
+                Антибактериальное средство для рук и ногтей 80мл, Severina
+              </li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний желтый</li>
+              <li>Безворсовые салфетки (70шт)</li>
+              <li>Апельсиновые палочки 25шт.</li>
+              <li>Щетка для удаления пыли (модель №2)</li>
+              <li>Фольга White Line, серебряная (без коробки) 25м.</li>
+              <li>Кусачки для удаления кутикулы Mertz 4 мм</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 11-ый элемент-------------------------------->
+      <article id="eleventhelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Bluesky Гибридный&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/11.jpg" alt="element_11" />
+            <figcaption>Bluesky Гибридный</figcaption>
+            <div class="price">
+              <p class="price0">3900 руб.</p>
+              <p class="price1">3600 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="011"
+              data-sb-product-name="Комплект для Shellac Bluesky Гибридный"
+              data-sb-product-price="3600"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/11.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            <br />
+            Набор Bluesky Гибридный состоит из 16 самых необходимых товаров для
+            создания гель-лакового маникюра в домашних условиях.
+            <br />
+            <br />
+            Готовый набор позволит Вам сэкономить Ваше время на выборе
+            необходимых материалов, а также Ваши деньги на посещение салонов
+            красоты.
+            <br />
+            <br />
+            <br />
+            Набор:
+            <br />
+            <br />
+            <ol>
+              <li>Лампа гибридная CCFL+Led 36 вт</li>
+              <li>Bluesky Rubber base ( Каучуковая база)</li>
+              <li>Bluesky Rubber top ( Каучуковый топ)</li>
+              <li>Bluesky Primer</li>
+              <li>Гель-лак Bluesky 3 шт</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>
+                Антибактериальное средство для рук и ногтей 80мл, Severina
+              </li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний желтый</li>
+              <li>Безворсовые салфетки (70шт)</li>
+              <li>Апельсиновые палочки 25шт.</li>
+              <li>Щетка для удаления пыли (модель №2)</li>
+              <li>Фольга White Line, серебряная (без коробки) 25м.</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Каталог товаров 12-ый элемент-------------------------------->
+      <article id="twelvthelem" style="display: none">
+        <h1>Комплект Bluesky &#171;Продвинутый Bluesky&#187;</h1>
+        <div class="card_and_description">
+          <div class="cell firstelement">
+            <img src="../../img/12.jpg" alt="element_12" />
+            <figcaption>Продвинутый Bluesky</figcaption>
+            <div class="price">
+              <p class="price0">4200 руб.</p>
+              <p class="price1">3900 руб.</p>
+            </div>
+            <div class="product__quantity"></div>
+            <button
+              class="add-to-cart"
+              type="button"
+              data-sb-id-or-vendor-code="012"
+              data-sb-product-name="Комплект для Shellac Продвинутый Bluesky"
+              data-sb-product-price="3900"
+              data-sb-product-quantity="1"
+              data-sb-product-img="../../img/12.jpg"
+            >
+              <div class="add">Добавить в корзину</div>
+              <img src="../../img/shopping-basket-wight.svg" />
+            </button>
+          </div>
+          <div class="description">
+            Состав набора:
+            <br />
+            <br />
+            <br />
+            <ol>
+              <li>Гибридная CCFL+LED лампа 36 Вт</li>
+              <li>Bluesky Rubber base coat, Каучуковая основа для гель-лак</li>
+              <li>Bluesky Rubber top coat, Каучуковый топ для гель-лака</li>
+              <li>Bluesky Primer</li>
+              <li>Гель-лак Bluesky 7 шт</li>
+              <li>
+                Обезжириватель для ногтей и снятия липкого слоя 100мл, Severina
+              </li>
+              <li>Средство для снятия гель-лака с "носиком" 80мл, Severina</li>
+              <li>
+                Антибактериальное средство для рук и ногтей 80мл, Severina
+              </li>
+              <li>Пилка тонкая bluesky 180/240</li>
+              <li>Бафик полировщик 4х сторонний желтый</li>
+              <li>Безворсовые салфетки (70шт)</li>
+              <li>Апельсиновые палочки 25шт.</li>
+              <li>Щетка для удаления пыли (модель №2)</li>
+              <li>Зажим-прищепка для снятия искуственных покрытий</li>
+              <li>Палитра круглая матовая</li>
+              <li>Подставка для рук "Классическая"</li>
+              <li>Салфетки одноразовые в рулоне 20/30 100шт.</li>
+              <li>Масло для кутикулы увлажняющее</li>
+              <li>
+                Для удаления кутикулы в стеклянном флаконе с пипеткой 75мл,
+                Domix
+              </li>
+              <li>Ванночка для маникюра</li>
+              <li>Ёмкость с помпой (модель №2)</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+      <!---Доставка и оплата-------------------------------->
+      <section id="page3" style="display: none">
+        <h1>Доставка</h1>
+        <div class="shippment">
+          <h2>Курьерской службой</h2>
+          <img
+            src="../../img/icons8-доставка-64 (1).png"
+            alt="shippment to door"
+          />
+          <br />
+          <br />
+          Ваш заказ застрахован от повреждений во время доставки. Доставка
+          курьерской службой по России производится без ограничений по сумме
+          заказа. Стоимость доставки рассчитывается автоматически при оформлении
+          заказа.
+          <br />
+          <br />
+          Акция! Бесплатная доставка при заказе от 5000 рублей действует до
+          конца текущего месяца.
+        </div>
+        <div class="shippment">
+          <h2>Забрать в магазине</h2>
+          <img src="../../img/icons8-магазин-64.png" alt="shop" />
+          <br />
+          <br />
+          Вы можете забронировать нужный вам товар в любом удобном для вас
+          магазине Shellac-butic.
+          <br />
+          <br />
+          После того, как придет подтверждение из магазина, можно поехать в
+          магазин, оплатить и забрать заказ.
+        </div>
+        <h1>Оплата</h1>
+        <div class="pay">
+          <h2>Наличными</h2>
+          <img src="../../img/icons8-без-кредитных-карт-64.png" alt="shop" />
+          <br />
+          <br />
+          Оплатить заказ наличными можно на кассе магазина или при получении у
+          курьера. После оформления заказа на сайте менеджер свяжется с вами в
+          течение 30 минут. Пожалуйста, проверяйте правильность указания вашего
+          телефонного номера — заказ доставляется только после подтверждения. Мы
+          обрабатываем заказы ежедневно с 9:00 до 22:00. Если вы оформите ваш
+          заказ ночью, он будет обработан в следующий рабочий день нашего
+          интернет-магазина. Вы всегда можете оформить заказ по телефону 8 (800)
+          700-19-44 и задать все необходимые вопросы нашим менеджерам.
+        </div>
+      </section>
+      <!---О компании-------------------------------->
+      <section id="page4" style="display: none">
+        <h1>О компании</h1>
+        <div class="about_us">
+          Мы рады приветствовать посетителей в нашем интернет-магазине. У нас
+          предлагаются товары, используемые в наращивании и дизайне ногтей.
+          <br />
+          <br />
+          <h2>Почему надо покупать у нас?</h2>
+          <br />
+          <br />
+          Наш магазин специализируется на продажах товаров для ресничного,
+          ногтевого сервиса, косметологии. Компания начала деятельность в 2014
+          году и быстро обрела известность среди потребителей. Популярности
+          интернет-магазина немало способствует большой ассортимент качественной
+          продукции, предназначенной для выполнения педикюра и маникюра,
+          косметологии, наращивания ногтевых пластин. У нас можно найти более
+          3000 наименований продукции, причем ассортимент все время расширяется,
+          пополняется новинками. Всю имеющуюся в ассортименте продукцию можно
+          просмотреть на нашем сайте – для этого разработан удобный для
+          пользователей иллюстрированный каталог.
+          <br />
+          <br />
+          <h2>Цены на товары</h2>
+          <br />
+          <br />
+          Вы сможете найти у нас сногсшибательные цены на продукцию. Мы ведем
+          закупки напрямую от производителей товара, что позволяет покупателям
+          не переплачивать. Поскольку мы ведем торговлю через интернет, нам нет
+          необходимости оплачивать аренду офисных площадей, не требуется
+          нанимать продавцов и оплачивать их труд. Поскольку в нашем случае
+          отсутствуют расходы, которые обычно несут руководители стационарных
+          магазинов, нам нет необходимости завышать стоимость товара. Наценки в
+          нашем магазине минимальные, что дает возможность нашим покупателям
+          приобретать качественную продукцию, не переплачивая при этом.
+          <br />
+          <br />
+          Скидки и акции, которые мы часто предлагаем любимым покупателям,
+          тщательно разработанные программы бонусов и особые предложения
+          позволяют существенно сэкономить.
+          <br />
+          <br />
+          <h2>Разнообразие продукции</h2>
+          <br />
+          <br />
+          В нашем интернет-магазине представлена высококачественная продукция. У
+          нас имеются все необходимые сертификаты, а высокий потребительский
+          спрос на реализуемую продукцию лишь подчеркивает ее прекрасное
+          качество. Мы можем предложить покупателям наиболее низкий минимум
+          регионального заказа в сравнении с прочими крупнейшими торговыми
+          площадками интернета – от 700 рублей. Нашим покупателям обеспечен
+          хороший уровень сервиса. Заказы принимаются и обрабатываются каждый
+          день, включая выходные.
+          <br />
+          <br />
+          Специалисты нашего магазина готовы ответить на все вопросы,
+          интересующие вас. Каждый покупатель может рассчитывать на то, что его
+          ожидает большое внимание и любая помощь со стороны персонала. Мы любим
+          наших клиентов и неуклонно совершенствуемся в профессиональном плане.
+          <br />
+          <br />
+        </div>
+      </section>
+      <!---Контакты-------------------------------->
+      <section id="page5" style="display: none">
+        <h1>Контакты</h1>
+        <div class="about_us">
+          <h2>Отдел розничных продаж:</h2>
+          <br />
+          <br />
+          +7 495 790-99-75 с 10 00 до 20 00 (по Московскому времени)
+          <br />
+          <br />
+          +7 903 790-99-75 с 10 00 до 20 00 (по Московскому времени) - WhatsApp
+          \ Viber
+          <br />
+          <br />
+          e-mail: info@Shellac-butik.ru
+          <br />
+          <br />
+          Мы в Инстаграмм: @Nail_mania.ru
+          <br />
+          <br />
+          Мы в Вконтакте: Shellac-butik.ru
+          <br />
+          <br />
+          <h2>Отдел оптовых продаж:</h2>
+          <br />
+          <br />
+          e-mail: info@nail-mania.ru
+          <br />
+          <br />
+          <h2>Мастер консультант:</h2>
+          <br />
+          <br />
+          +7 903 790-99-75 c 10 00 до 20 00 (по Московскому времени)
+          <br />
+          <br />
+          В интернет магазине Shellac-butik работает дипломированный мастер
+          маникюра и педикюра, который всегда с радостью ответит на все Ваши
+          вопросы касательно технологии использования товаров нашего магазина
+          <br />
+          <br />
+          e-mail: info@Shellac-butik.ru
+          <br />
+          <br />
+          Юридический адрес: г. Москва, ул. Новая Басманная, д. 15
+          <br />
+          <br />
+        </div>
+      </section>
+    </main>
+    <!---Футер------------------------->
+    <footer>
+      <address>
+        2017 - 2018 © Интернет магазин Shellac-butic. Все права защищены.<br />
+        <a id="a2" href="mailto:lina-kursk@mail.ru">Email us</a><br />
+        Юридический адрес: г. Москва, ул. Новая Басманная, д.15<br />
+        Телефон для связи: 8 981 881 36 26
+      </address>
+    </footer>
+
+    <link rel="stylesheet" href="../css/smartbasket.min.css" />
+
+    <div class="smart-basket__wrapper"></div>
+
+    <script src="../js/smartbasket.min.js"></script>
+
+    <script>
+      $(function () {
+        $(".smart-basket__wrapper").smbasket({
+          productElement: "cell",
+          buttonAddToBasket: "add-to-cart",
+          productPrice: "product__price-number",
+
+          productQuantityWrapper: "product__quantity",
+          smartBasketMinArea: "basket",
+          countryCode: "+7",
+          smartBasketCurrency: "₽",
+          smartBasketMinIconPath: "../../img/shopping-basket-wight.svg",
+
+          agreement: {
+            isRequired: true,
+            isChecked: true,
+            isLink: "https://pay.google.com/gp/w/home/signup",
+          },
+          nameIsRequired: false,
+        });
+      });
+    </script>
+    <script src="../js/sweetalert2.min.js" type="text/javascript"></script>
+  </body>
+</html>
