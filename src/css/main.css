@@ -1065,6 +1065,7 @@ input:-webkit-autofill:active {
   .popup {
     max-width: 240px;
     margin-left: -120px;
+    top: 10vw;
   }
 
   .popup input[type="text"] {
