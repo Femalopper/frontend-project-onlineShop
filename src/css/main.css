@@ -257,6 +257,7 @@ legend {
 ul.mainNav {
   padding-top: 1.3%;
   margin-left: 10%;
+  height: 100%;
 }
 
 .mainNav li {
@@ -1002,8 +1003,11 @@ input:-webkit-autofill:active {
     background: url(../../img/134.gif);
   }
 
+  .nav {
+    height: 70px;
+  }
+
   ul.mainNav {
-    padding-top: 0.8%;
     margin: 0;
   }
 
