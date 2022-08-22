@@ -872,7 +872,7 @@ input:-webkit-autofill:active {
   }
 
   .mainNav button {
-    font-size: 1em;
+    font-size: 2.5vw;
   }
 
   #wrapper {
@@ -1009,7 +1009,7 @@ input:-webkit-autofill:active {
   }
 
   .nav {
-    height: 75px;
+    height: 85px;
   }
 
   ul.mainNav {
@@ -1019,7 +1019,7 @@ input:-webkit-autofill:active {
   }
 
   .mainNav button {
-    font-size: 4vw;
+    font-size: 3.4vw;
   }
 
   .basket {
